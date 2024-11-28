@@ -3,22 +3,16 @@
 from ..persistence import repositories
 from ..utilities import translator
 from django.contrib.auth import get_user
-from ..transport.transport import getAllImages as TgetAllImages
+from ..transport.transport import getAllImages as Transport_getAllImages
+from ..utilities.translator import fromRequestIntoCard
 
 def getAllImages(input=None):
     # obtiene un listado de datos "crudos" desde la API, usando a transport.py.
     json_collection = []
-    json_collection = TgetAllImages(input)
+    json_collection = Transport_getAllImages(input)
 
     # recorre cada dato crudo de la colección anterior, lo convierte en una Card y lo agrega a images.
-    images = []
-    for dato in json_collection:
-        images.append({
-        "title": "Card 1",
-        "description": "This is the first card.",
-        "image": "null",
-        "footer": "Footer Text 1"
-        })
+    images = [fromRequestIntoCard(obj) for obj in json_collection]
     return images
 
 # añadir favoritos (usado desde el template 'home.html')
