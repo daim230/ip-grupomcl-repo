@@ -14,7 +14,7 @@ def home(request):
     images = []
     images = services.getAllImages()
     favourite_list = []
-    print("[home view]: imagenes para renderizar:", images)
+    print([home view], images)
 
     return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
 
